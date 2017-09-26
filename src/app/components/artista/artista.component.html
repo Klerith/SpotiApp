@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div *ngIf="artista" class="row">
+    <div class="col-md-4">
+      <img [src]="artista.images | sinfoto" class="float-left img-fluid img-thumbnail img-circle">
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-12">
+          <h3> {{ artista.name }} <small> Populadirar {{ artista.popularity }} </small></h3>
+          <hr>
+        </div>
+        <div class="col-md-12">
+          <a [href]="artista.external_urls?.spotify" class="btn btn-outline-success">Ver pagina</a>
+          <button [routerLink]="['/search']" type="button" class="btn btn-outline-danger">regresar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="pistas" class="row mt-3">
+    <div class="col-md-12">
+      <h3>Top de {{ artista.name }}</h3>
+      <hr>
+    </div>
+    <div class="col-md-12">
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Foto</th>
+            <th>Cancion</th>
+            <th>Popularidad</th>
+            <th>preview</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let pista of pistas, let i = index">
+          <tr>
+            <th scope="row">{{ i+1 }}</th>
+            <td><img [src]="pista.album?.images[2].url" class="img-fluid img-thumbnail"></td>
+            <td>{{ pista.name }}</td>
+            <td>{{ pista.popularity }}%</td>
+            <td>
+              <iframe [src]="pista.uri | donseguro:'https://open.spotify.com/embed?uri='" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+              <!--audio controls>
+                <source [src]="pista.preview_url" type="audio/mpeg">
+              </audio-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
